@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/item0"
+            android:title="有道词典"/>
+        <item
+            android:id="@+id/item1"
+            android:title="Gallery"/>
+        <item
+            android:id="@+id/item2"
+            android:title="Slideshow"/>
+        <item
+            android:id="@+id/item3"
+            android:title="Tools"/>
+    </group>
+
+    <item
+        android:id="@+id/item4"
+        android:title="item4">
+        <menu>
+            <item
+                android:id="@+id/item4_1"
+                android:title="Share"/>
+            <item
+                android:id="@+id/item4_2"
+                android:title="Send"/>
+        </menu>
+    </item>
+
+</menu>
