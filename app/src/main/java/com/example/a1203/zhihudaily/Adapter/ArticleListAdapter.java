@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import com.example.a1203.zhihudaily.Bean.TopStories;
 import com.example.a1203.zhihudaily.Holder.ArticleListFooterHolder;
 import com.example.a1203.zhihudaily.Holder.ArticleListHolder;
 import com.example.a1203.zhihudaily.Holder.ArticleListTopHolder;
+import com.example.a1203.zhihudaily.Holder.ArticleTitleListHolder;
 import com.example.a1203.zhihudaily.Listern.OnArticleItemClickListener;
 import com.example.a1203.zhihudaily.Listern.OnLoadTopArticleListener;
 import com.example.a1203.zhihudaily.Listern.OnSlideToTheBottomListener;
@@ -21,7 +23,11 @@ import com.example.a1203.zhihudaily.R;
 import com.example.a1203.zhihudaily.Bean.Stories;
 import com.example.a1203.zhihudaily.Utility.Constant;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -31,17 +37,16 @@ import java.util.List;
  */
 public class ArticleListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    private final int TYPE_TOP = 0;
+    private final int TYPE_ARTICLE = 1;
+    private final int TYPE_FOOTER = 2;
+    private final int TYPE_ARTICLE_TITLE = 3;
+
     private List<Stories> storiesList;
 
     private LayoutInflater inflater;
 
     private Context context;
-
-    private final int TYPE_TOP = 0;
-
-    private final int TYPE_ARTICLE = 1;
-
-    private final int TYPE_FOOTER = 2;
 
     public OnLoadTopArticleListener loadTopArticleListener;
 
@@ -50,6 +55,10 @@ public class ArticleListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private OnArticleItemClickListener clickListener;
 
     private ArticleListTopHolder articleListTopHolder;
+
+    private List<Integer> dateList = new ArrayList<>();
+
+    private int countData = 0;
 
     public ArticleListAdapter(Context context) {
         this.context = context;
@@ -91,24 +100,36 @@ public class ArticleListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
     @Override
     public int getItemViewType(int position) {
-        if (position == 0){
+        if (position == 0) {
             return TYPE_TOP;
+        }
+        if (position == 1) {
+            return TYPE_ARTICLE_TITLE;
         }
         if (position + 1 ==getItemCount()){
             return TYPE_FOOTER;
         }
-        return TYPE_ARTICLE;
+        int currentDate = storiesList.get(position).getDate();
+        int prevIndex = position - 1;
+        boolean isDifferent = storiesList.get(prevIndex).getDate() != currentDate;
+        return isDifferent ? TYPE_ARTICLE_TITLE : TYPE_ARTICLE;
     }
+
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
         if (viewType == TYPE_ARTICLE){
             view = inflater.inflate(R.layout.article_list_item, parent, false);
+            Log.d(" 12345678", "TYPE_ARTICLE");
             return new ArticleListHolder(view);
         } else if (viewType == TYPE_FOOTER) {
             view = inflater.inflate(R.layout.footer, parent, false);
             return new ArticleListFooterHolder(view);
+        } else if (viewType == TYPE_ARTICLE_TITLE) {
+            view = inflater.inflate(R.layout.article_list_item_title, parent, false);
+            Log.d("12345678", "TYPE_ARTICLE_TITLE");
+            return new ArticleTitleListHolder(view);
         }
         view = inflater.inflate(R.layout.banner_layout, parent, false);
         return new ArticleListTopHolder(view);
@@ -131,6 +152,12 @@ public class ArticleListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             case TYPE_TOP:
                 articleListTopHolder = (ArticleListTopHolder)holder;
                 break;
+            case TYPE_ARTICLE_TITLE:
+                ArticleTitleListHolder articleTitleListHolder = ((ArticleTitleListHolder) holder);
+                Constant.getImageLoader().displayImage(storiesList.get(position - 1).getImages().get(0), articleTitleListHolder.articleImage, Constant.getDisplayImageOptions());
+                articleTitleListHolder.articleTitle.setText(storiesList.get(position - 1).getTitle());
+                articleTitleListHolder.articleListItemTitle.setText(FriendlyDate(storiesList.get(position).getDate()));
+                articleTitleListHolder.setItemClickListener(clickListener);
             default:
                 break;
         }
@@ -141,18 +168,53 @@ public class ArticleListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         return storiesList.size() + 1;
     }
 
-    // 当刷新文章列表时使用
+    /**
+     * 当刷新文章列表时使用
+     */
     public void setData(ArticleLatest articleLatest){
         storiesList.clear();
         storiesList.addAll(articleLatest.getStories());
     }
 
-    // 当加载下一页文章内容时使用
+    /**
+     * 当加载下一页文章内容时使用
+     */
     public void addData(List<Stories> storiesList){
         this.storiesList.addAll(storiesList);
     }
 
     public void setSlideToTheBottomListener(OnSlideToTheBottomListener slideListener){
         this.slideListener = slideListener;
+    }
+
+    /**
+     * 日期友好转换
+     * @param date 文章日期
+     * @return 友好的日期显示方式
+     */
+    public static String FriendlyDate(int date) {
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        Calendar cal = Calendar.getInstance();
+        String start = sdf.format(cal.getTime());
+        int nowDate = Integer.parseInt(start);
+
+        if (date == nowDate) {
+            return "今日";
+        } else if (nowDate - date == 1) {
+            return "昨日";
+        } else if (nowDate - date == 2) {
+            return "前日";
+        } else {
+            Date date1 = null;
+            try {
+                date1 = sdf.parse(date+"");
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date1);
+            return new SimpleDateFormat("MM月dd日 E").format(date1);
+        }
     }
 }

@@ -9,6 +9,8 @@ import java.util.List;
  */
 public class Stories {
 
+    private int date;
+
     private int type;
 
     private int id;
@@ -18,6 +20,14 @@ public class Stories {
     private String title;
 
     private List<String> images;
+
+    public int getDate() {
+        return date;
+    }
+
+    public void setDate(int date) {
+        this.date = date;
+    }
 
     public int getType() {
         return type;

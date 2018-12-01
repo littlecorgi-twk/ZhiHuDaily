@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import com.example.a1203.zhihudaily.Adapter.ArticleListAdapter;
 import com.example.a1203.zhihudaily.Bean.ArticleBefore;
 import com.example.a1203.zhihudaily.Bean.ArticleLatest;
+import com.example.a1203.zhihudaily.Bean.Stories;
 import com.example.a1203.zhihudaily.Bean.TopStories;
 import com.example.a1203.zhihudaily.Listern.OnLoadBeforeArticleListener;
 import com.example.a1203.zhihudaily.Listern.OnLoadLatestArticleListener;
@@ -68,6 +69,9 @@ public class MainFragment extends BaseFragment{
             @Override
             public void onSuccess(ArticleLatest articleLatest) {
                 adapter.setData(articleLatest);
+                for (Stories stories : articleLatest.getStories()) {
+                    stories.setDate(Integer.parseInt(articleLatest.getDate()));
+                }
                 getRootActivity().setDate(articleLatest.getDate());
                 List<TopStories> topStoriesList = articleLatest.getTop_stories();
                 if (adapter.loadTopArticleListener != null){
@@ -95,6 +99,9 @@ public class MainFragment extends BaseFragment{
         beforeListener = new OnLoadBeforeArticleListener() {
             @Override
             public void onSuccess(ArticleBefore articleBefore) {
+                for (Stories stories : articleBefore.getStories()) {
+                    stories.setDate(Integer.parseInt(articleBefore.getDate()));
+                }
                 adapter.addData(articleBefore.getStories());
                 adapter.notifyDataSetChanged();
                 getRootActivity().setDate(articleBefore.getDate());
