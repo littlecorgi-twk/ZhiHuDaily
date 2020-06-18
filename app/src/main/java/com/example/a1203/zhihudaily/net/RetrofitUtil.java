@@ -116,6 +116,7 @@ public class RetrofitUtil {
                     String html = "<html><head>" + css + "</head><body>" + content.getBody() + "</body></html>";
                     html = html.replace("<div class=\"img-place-holder\">", "");
                     html = html.replace("<img class=\"content-image\"", "<img height=\"auto\"; width=\"100%\"");
+                    html = html.replace("http:", "https:");
                     content.setBody(html);
                     if (listener != null) {
                         listener.onSuccess(content);
