@@ -46,7 +46,6 @@ public class StartActivity extends AppCompatActivity {
         scaleAnimation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-
             }
 
             @Override
@@ -56,10 +55,7 @@ public class StartActivity extends AppCompatActivity {
 
             @Override
             public void onAnimationRepeat(Animation animation) {
-
             }
-
-
         });
         startImage.startAnimation(scaleAnimation);
     }
@@ -69,7 +65,6 @@ public class StartActivity extends AppCompatActivity {
      */
     @Override
     public void onBackPressed() {
-
     }
 
     private void toMainActivity() {

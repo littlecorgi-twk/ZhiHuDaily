@@ -21,7 +21,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class RetrofitUtil {
 
-    private static final String BASE_URL = "http://news-at.zhihu.com/api/4/news/";
+    private static final String BASE_URL = "https://news-at.zhihu.com/api/4/news/";
 
     private static Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(BASE_URL)

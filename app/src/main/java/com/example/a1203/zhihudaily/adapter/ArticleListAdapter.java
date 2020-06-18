@@ -22,7 +22,6 @@ import com.example.a1203.zhihudaily.holder.ArticleTitleListHolder;
 import com.example.a1203.zhihudaily.listener.OnArticleItemClickListener;
 import com.example.a1203.zhihudaily.listener.OnLoadTopArticleListener;
 import com.example.a1203.zhihudaily.listener.OnSlideToTheBottomListener;
-import com.example.a1203.zhihudaily.utility.MyApplication;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
