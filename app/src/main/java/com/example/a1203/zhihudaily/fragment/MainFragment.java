@@ -128,7 +128,7 @@ public class MainFragment extends BaseFragment {
     }
 
     public void getLatestArticleList() {
-        if (!HttpUtil.isNetworkConnected(mActivity)) {
+        if (HttpUtil.isNotNetworkConnected(mActivity)) {
             hint(recyclerView, "似乎没有连接网络?", Color.parseColor("#0099CC"));
             stopRefresh();
         }
@@ -136,7 +136,7 @@ public class MainFragment extends BaseFragment {
     }
 
     public void getBeforeArticleList() {
-        if (!HttpUtil.isNetworkConnected(mActivity)) {
+        if (HttpUtil.isNotNetworkConnected(mActivity)) {
             hint(recyclerView, "似乎没有连接网络?", Color.parseColor("#0099CC"));
         }
         Log.d("23424", "getBeforeArticleList: " + getRootActivity().getDate());

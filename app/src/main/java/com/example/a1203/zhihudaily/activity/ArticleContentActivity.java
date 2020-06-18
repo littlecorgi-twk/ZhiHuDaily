@@ -115,7 +115,7 @@ public class ArticleContentActivity extends AppCompatActivity {
                 hintText.setText("点击重试");
                 status = STATUS.WAIT_RETRY;
                 Snackbar snackbar;
-                if (!HttpUtil.isNetworkConnected(ArticleContentActivity.this)) {
+                if (HttpUtil.isNotNetworkConnected(ArticleContentActivity.this)) {
                     snackbar = Snackbar.make(webView, "似乎没有连接网络?", Snackbar.LENGTH_SHORT);
                 } else {
                     snackbar = Snackbar.make(webView, "好奇怪，文章加载不出来", Snackbar.LENGTH_SHORT);
