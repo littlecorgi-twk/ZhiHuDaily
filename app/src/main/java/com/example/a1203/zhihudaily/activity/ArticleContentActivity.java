@@ -29,6 +29,9 @@ import com.example.a1203.zhihudaily.net.HttpUtil;
 import com.example.a1203.zhihudaily.R;
 import com.githang.statusbar.StatusBarCompat;
 
+/**
+ * @author littlecorgi
+ */
 public class ArticleContentActivity extends AppCompatActivity {
 
     private OnLoadArticleContentListener listener;
