@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ZhihuiDaily</string>
+    <string name="app_name">ZhihuDaily</string>
     <string name="default_image">default image</string>
     <string name="loading">正在加载</string>
     <string name="loading1">Loading</string>
