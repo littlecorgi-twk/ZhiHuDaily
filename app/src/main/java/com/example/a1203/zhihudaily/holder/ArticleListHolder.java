@@ -35,7 +35,7 @@ public class ArticleListHolder extends RecyclerView.ViewHolder implements View.O
     @Override
     public void onClick(View v) {
         if (itemClickListener != null) {
-            itemClickListener.OnItemClickListener(getAdapterPosition());
+            itemClickListener.onItemClickListener(getAdapterPosition());
         }
     }
 }

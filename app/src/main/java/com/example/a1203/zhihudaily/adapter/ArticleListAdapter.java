@@ -66,16 +66,13 @@ public class ArticleListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         inflater = LayoutInflater.from(context);
         storiesList = new ArrayList<>();
         //文章列表点击事件监听
-        clickListener = new OnArticleItemClickListener() {
-            @Override
-            public void OnItemClickListener(int position) {
-                int id = storiesList.get(position - 1).getId();
-                Intent intent = new Intent(context, ArticleContentActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putInt("ID", id);
-                intent.putExtras(bundle);
-                context.startActivity(intent);
-            }
+        clickListener = position -> {
+            int id = storiesList.get(position - 1).getId();
+            Intent intent = new Intent(context, ArticleContentActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putInt("ID", id);
+            intent.putExtras(bundle);
+            context.startActivity(intent);
         };
         //加载banner文章事件监听
         loadTopArticleListener = new OnLoadTopArticleListener() {

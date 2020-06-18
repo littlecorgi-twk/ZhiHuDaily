@@ -7,6 +7,10 @@ package com.example.a1203.zhihudaily.listener;
  */
 public interface OnArticleItemClickListener {
 
-    void OnItemClickListener(int position);
+    /**
+     * 文章点击回调
+     * @param position 被点击文章在RecyclerView中的位置
+     */
+    void onItemClickListener(int position);
 
 }

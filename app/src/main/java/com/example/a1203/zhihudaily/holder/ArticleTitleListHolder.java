@@ -11,7 +11,7 @@ import com.example.a1203.zhihudaily.R;
  * @Date 2018-11-28 21:14
  * @email a1203991686@126.com
  */
-public class ArticleTitleListHolder extends ArticleListHolder{
+public class ArticleTitleListHolder extends ArticleListHolder {
 
     public TextView articleListItemTitle;
 
@@ -28,7 +28,7 @@ public class ArticleTitleListHolder extends ArticleListHolder{
     @Override
     public void onClick(View v) {
         if (itemClickListener != null) {
-            itemClickListener.OnItemClickListener(getAdapterPosition());
+            itemClickListener.onItemClickListener(getAdapterPosition());
         }
     }
 }
