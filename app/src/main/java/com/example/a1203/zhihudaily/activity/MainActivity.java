@@ -66,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         TextView toolbarText = findViewById(R.id.toolbarText);
         toolbarText.setText("享受阅读的快乐");
-        toolbar.inflateMenu(R.menu.action_menu);
 
         drawerLayout = findViewById(R.id.drawerLayout);
         refreshLayout = findViewById(R.id.refreshLayout);
