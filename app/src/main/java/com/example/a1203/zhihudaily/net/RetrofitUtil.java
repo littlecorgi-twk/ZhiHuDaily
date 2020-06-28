@@ -3,6 +3,7 @@ package com.example.a1203.zhihudaily.net;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.example.a1203.zhihudaily.activity.MainActivity;
 import com.example.a1203.zhihudaily.bean.ArticleBefore;
 import com.example.a1203.zhihudaily.bean.ArticleContent;
 import com.example.a1203.zhihudaily.bean.ArticleLatest;
@@ -21,10 +22,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class RetrofitUtil {
 
-    private static final String BASE_URL = "https://news-at.zhihu.com/api/4/news/";
-
     private static Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(MainActivity.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build();
 

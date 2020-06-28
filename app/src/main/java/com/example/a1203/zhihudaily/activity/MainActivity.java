@@ -1,5 +1,7 @@
 package com.example.a1203.zhihudaily.activity;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -46,10 +48,21 @@ public class MainActivity extends AppCompatActivity {
 
     public boolean isHomepage;
 
+    public static String BASE_URL = "https://news-at.zhihu.com/api/4/news/";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        SharedPreferences sp = getSharedPreferences("MainActivity", Context.MODE_PRIVATE);
+        if (sp.contains("zhihu_article_url")) {
+            BASE_URL = sp.getString("zhihu_article_url", "https://news-at.zhihu.com/api/4/news/");
+        } else {
+            SharedPreferences.Editor editor = sp.edit();
+            editor.putString("zhihu_article_url", "https://news-at.zhihu.com/api/4/news/");
+            editor.apply();
+        }
 
         // 状态栏变色
         int color = Color.rgb(0, 162, 237);
@@ -74,13 +87,10 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout.addDrawerListener(drawerToggle);
         drawerToggle.syncState();
         refreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright, android.R.color.holo_red_light);
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                if (isHomepage) {
-                    MainFragment mainFragment = ((MainFragment) getFragmentByTag("Fragment" + currentId));
-                    mainFragment.getLatestArticleList();
-                }
+        refreshLayout.setOnRefreshListener(() -> {
+            if (isHomepage) {
+                MainFragment mainFragment = ((MainFragment) getFragmentByTag("Fragment" + currentId));
+                mainFragment.getLatestArticleList();
             }
         });
     }
